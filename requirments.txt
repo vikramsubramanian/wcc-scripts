@@ -1,0 +1,8 @@
+Flask
+certifi
+chardet
+idna
+pydiscourse
+python-dotenv
+requests
+urllib3
