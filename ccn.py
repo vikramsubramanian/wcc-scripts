@@ -87,8 +87,15 @@ def download_report():
         sleep(5)
         report = check_report()
 
-    # find the report download URL
-    report_url = report['last_report']['report_files'][1]['url']
+    # Find the CSV report file explicitly instead of assuming index
+    report_files = report['last_report']['report_files']
+    logger.info(f"Available report files: {[f['url'] for f in report_files]}")
+
+    csv_file = next((f for f in report_files if f['url'].endswith('.csv')), None)
+    if not csv_file:
+        raise Exception(f"No CSV file found in report files: {report_files}")
+
+    report_url = csv_file['url']
     logger.info("Report Updated.")
     logger.info("Downloading CSV.")
     logger.info(report_url)
